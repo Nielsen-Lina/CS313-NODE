@@ -1,0 +1,41 @@
+<!Doctype HTML>
+<html>
+<head>
+<title>Math</title>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+$(document).ready(function() {
+	$("#calculate").click(function() {
+		var values = $("form").serialize();
+		$.getJSON("/math_service", values)
+		.done(function(data) {
+		var result = document.getElementById('result');
+			result.innerHTML = data.result;
+		});
+	});
+});
+</script>
+</head>
+<body>
+<h1>Math Calculator</h1>
+<form action="/math" method="">
+<input type="text" name="operand1">
+<select name="operation">
+<option>+</option>
+<option>-</option>
+<option>*</option>
+<option>/</option>
+</select>
+<input type="text" name="operand2">
+<input type="button" id="calculate" value="Ajax Calculate" />
+
+<input type="submit" value="calculate">
+
+</form>
+<p>
+Ajax Result is: <span id="result"></span>
+</p>
+
+</body>
+</html>
