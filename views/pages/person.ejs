@@ -19,27 +19,13 @@
             <p id="child2"></p>
         </div>
         <script>
-        // $(document).ready(function() {
-        //     $("#getDetails").click(function() {
-        //             var id = $("#id").val();
-        //             $.getJSON("/api/getPerson/" + id)
-        //             .done(function(results) {
-        //                 $("#firstName")[0].innerHTML = results.first_name;
-        //                 $("#lastName")[0].innerHTML = results.last_name;
-        //                 $("#dob")[0].innerHTML = results.dob;
-        //             })
-        //             .error(function(xhr, testStatus, errorThrown) {
-        //                 console.log(errorThrown);
-        //             });
-        //     });
-        // })
         $(document).ready(function() {
-            $("#getParents").click(function() {
+            $("#getDetails").click(function() {
                     var id = $("#id").val();
-                    $.getJSON("/api/getChildren/" + id)
+                    $.getJSON("/api/getPerson/" + id)
                     .done(function(results) {
-                        $("#child1")[0].innerHTML = results.first_name;
-                        $("#child2")[0].innerHTML = results.last_name;
+                        $("#firstName")[0].innerHTML = results.first_name;
+                        $("#lastName")[0].innerHTML = results.last_name;
                         $("#dob")[0].innerHTML = results.dob;
                     })
                     .error(function(xhr, testStatus, errorThrown) {
@@ -47,6 +33,20 @@
                     });
             });
         })
+        // $(document).ready(function() {
+        //     $("#getParents").click(function() {
+        //             var id = $("#id").val();
+        //             $.getJSON("/api/getChildren/" + id)
+        //             .done(function(results) {
+        //                 $("#child1")[0].innerHTML = results.first_name;
+        //                 $("#child2")[0].innerHTML = results.last_name;
+        //                 $("#dob")[0].innerHTML = results.dob;
+        //             })
+        //             .error(function(xhr, testStatus, errorThrown) {
+        //                 console.log(errorThrown);
+        //             });
+        //     });
+        //})
         </script>
     </body>
 </html>
