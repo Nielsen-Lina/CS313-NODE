@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    </head>
+    <body>
+        <h1>Get Recipe</h1>
+        <form>
+            <input type="text" id="id" name="id" />
+            <input type="button" id="getDetails" value="Recipe Name">
+            <input type="button" id="getIngredients" value="Recipe Details">
+        </form>
+        <h2>Details</h2>
+        <div>
+            <p id="recipeName"></p>
+            <p id="recipeIngredients"></p>
+            <p id="recipeInstructions"></p>
+        </div>
+        <!-- <h1>Add Recipe</h1>
+        <form>
+            <input type="text" id="name" name="name" />
+            <input type="text" id="ingredient" name="ingredient" />
+            <input type="text" id="instruction" name="instruction" />
+            <input type="button" id="addRecipe" value="Add Recipe">
+        </form> -->
+        <script>
+        $(document).ready(function() {
+            $("#getDetails").click(function() {
+                    var id = $("#id").val();
+                    $.getJSON("/api/getRecipe/" + id)
+                    .done(function(results) {
+                        $("#recipeName")[0].innerHTML = results.recipe_name;
+                        $("#recipeIngredients")[0].innerHTML = "";
+                        $("#recipeInstructions")[0].innerHTML = "";
+                    })
+                    .error(function(xhr, testStatus, errorThrown) {
+                        console.log(errorThrown);
+                    });
+            });
+        })
+        $(document).ready(function() {
+            $("#getIngredients").click(function() {
+                    var id = $("#id").val();
+                    $.getJSON("/api/getRecipe/" + id)
+                    .done(function(results) {
+                        $("#recipeIngredients")[0].innerHTML = results.ingredients;
+                        $("#recipeInstructions")[0].innerHTML = results.instructions;
+                    })
+                    .error(function(xhr, testStatus, errorThrown) {
+                        console.log(errorThrown);
+                    });
+            });
+        })
+        // $(document).ready(function() {
+        //     $("#addRecipe").click(function() {
+        //             var id = $("#id").val();
+        //             $.getJSON("/api/addRecipe")
+        //             .done(function(results) {
+        //                 $("#recipeName")[0].innerHTML = results.recipe_name;
+        //                 $("#recipeIngredients")[0].innerHTML = results.ingredient_names;
+        //                 $("#recipeInstructions")[0].innerHTML = results.instruction_data;
+        //             })
+        //             .error(function(xhr, testStatus, errorThrown) {
+        //                 console.log(errorThrown);
+        //             });
+        //     });
+        // })
+        </script>
+    </body>
+</html>
