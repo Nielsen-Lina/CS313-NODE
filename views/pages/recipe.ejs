@@ -42,8 +42,8 @@
                     var id = $("#id").val();
                     $.getJSON("/api/getRecipe/" + id)
                     .done(function(results) {
-                        $("#recipeIngredients")[0].innerHTML = results.ingredients;
-                        $("#recipeInstructions")[0].innerHTML = results.instructions;
+                        $("#recipeIngredients")[0].innerHTML = "<strong>Ingredients: <strong>" + results.ingredients;
+                        $("#recipeInstructions")[0].innerHTML = "<strong>Instructions: <strong>" + results.instructions;
                     })
                     .error(function(xhr, testStatus, errorThrown) {
                         console.log(errorThrown);

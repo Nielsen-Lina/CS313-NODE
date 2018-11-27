@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<style>
+			h4 {
+				text-transform: uppercase;
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	</head>
+	<body>
+		<% recipe.forEach(function(recipe){ %>
+			<h4><%= recipe.recipe_name %></h4>
+			<p><strong>Ingredients: </strong> <%= recipe.ingredients %></p>
+			<p><strong>Instructions: </strong> <%= recipe.instructions %></p>
+			<br>
+		<% }); %>
+	</body>
+</html>

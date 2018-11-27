@@ -88,7 +88,7 @@ router.post('/addRecipe', async function(req, res, next) {
   })
   await client.connect()
   	var sql = 'INSERT INTO recipe(recipe_name, ingredients, instructions) VALUES($1, $2, $3)';
-    client.query(sql, [req.params.name, req.params.ingredient, req.params.instruction], function(err, result) {
+    client.query(sql, [req.params.name, req.params.ingredients, req.params.instructions], function(err, result) {
       console.log(result);
       client.end();
       if (err) {
@@ -110,11 +110,11 @@ router.delete('/deleteRecipe/:id', async function(req, res, next) {
       if (err) {
         return console.error('error running query', err);
       }
-      res.send(result.rows);
+      res.send(200);
     });
 });
 
-router.put('/editRecipe', async function(req, res, next) {
+router.put('/editRecipe/:id', async function(req, res, next) {
   const client = new Client({
     connectionString: connectionString,
   })
@@ -135,7 +135,20 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/person', (req, res) => res.render('pages/person'))
+  //.get('/person', (req, res) => res.render('pages/person'))
   .get('/recipe', (req, res) => res.render('pages/recipe'))
+  .get('/app', async function (req,res){
+  	const client = new Client({
+    	connectionString: connectionString,
+  	})
+  	await client.connect()
+  		client.query('SELECT * FROM recipe', function(err, result){
+  			if(err) {
+  				return console.error('error runing query', err)
+  			}
+  			res.render('pages/app', {recipe: result.rows})
+  			client.end()
+  		})
+  })
   .use('/api/', router)
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
