@@ -88,13 +88,12 @@ router.post('/addRecipe', async function(req, res, next) {
   })
   await client.connect()
   	var sql = 'INSERT INTO recipe(recipe_name, ingredients, instructions) VALUES($1, $2, $3)';
-    client.query(sql, [req.params.name, req.params.ingredients, req.params.instructions], function(err, result) {
-      console.log(result);
+    client.query(sql, [req.body.name, req.body.ingredients, req.body.instructions], function(err, result) {
       client.end();
       if (err) {
         return console.error('error running query', err);
       }
-      res.send(result.rows);
+      res.redirect('../app')
     });
 });
 
@@ -103,9 +102,8 @@ router.delete('/deleteRecipe/:id', async function(req, res, next) {
     connectionString: connectionString,
   })
   await client.connect()
-  	var sql = 'DELETE FROM recipe WHERE id = $1';
+  	var sql = 'DELETE FROM recipe WHERE recipe_id = $1';
     client.query(sql, [req.params.id], function(err, result) {
-      console.log(result);
       client.end();
       if (err) {
         return console.error('error running query', err);
@@ -114,24 +112,24 @@ router.delete('/deleteRecipe/:id', async function(req, res, next) {
     });
 });
 
-router.put('/editRecipe/:id', async function(req, res, next) {
+router.post('/editRecipe', async function(req, res, next) {
   const client = new Client({
     connectionString: connectionString,
   })
   await client.connect()
   	var sql = 'UPDATE recipe SET recipe_name = $1, ingredients = $2, instructions = $3 WHERE recipe_id = $4';
     client.query(sql, [req.body.name, req.body.ingredients, req.body.instructions, req.body.id], function(err, result) {
-      console.log(result);
       client.end();
       if (err) {
         return console.error('error running query', err);
       }
-      res.send(result.rows);
+      res.redirect('../app')
     });
 });
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(express.urlencoded({extended: true}))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
