@@ -1,5 +1,6 @@
 const { Pool, Client, defaults } = require('pg')
 const connectionString = 'postgres://rcwxhvodpnbhvc:eb2aff81e7eff233ab9bdcbf90c66e03bce85894418592a2a1f5163e1664cbf4@ec2-54-235-193-0.compute-1.amazonaws.com:5432/d2k6pqiar0umjq'
+defaults.ssl = true
 
 module.exports = {
 	getDetails: async function(req, res, next) {
